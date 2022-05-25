@@ -8,7 +8,7 @@ yarn-error.log
 lerna-debug.log
 /.vscode
 /.idea
-*.sqlite
+# *.sqlite
 coverage
 .umi
 /uploads
