@@ -36,6 +36,9 @@ export const PieChartBlockInitializer = (props: any) => {
           'x-decorator': 'CardItem',
           'x-component': 'PieChart',
           'x-editable': false,
+          'x-component-props': {
+            title: '示意性饼图',
+          },
         });
       }}
     />

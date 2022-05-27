@@ -1,6 +1,9 @@
 import { PieChart as PieChartR, Pie } from 'recharts';
 import { GeneralSchemaDesigner, SchemaSettings } from '@nocobase/client';
 
+import { observer, useField, useFieldSchema } from '@formily/react';
+import { FormDialog, FormLayout } from '@formily/antd';
+
 const data01 = [
   { name: 'Group A', value: 400 },
   { name: 'Group B', value: 300 },
@@ -21,15 +24,20 @@ const data02 = [
   { name: 'D2', value: 50 },
 ];
 
-export const PieChart = () => {
+export const PieChart = observer((props: any) => {
+  const { title="饼图" } = props;
   return (
-    <PieChartR width={500} height={300}>
-      <Pie data={data01} dataKey="value" cx="50%" cy="50%" outerRadius={60} fill="#8884d8" />
-      <Pie data={data02} dataKey="value" cx="50%" cy="50%" innerRadius={70} outerRadius={90} fill="#82ca9d" label />
-    </PieChartR>
+    <>
+      <h3>{title}</h3>
+      <PieChartR width={500} height={300}>
+        <Pie data={data01} dataKey="value" cx="50%" cy="50%" outerRadius={60} fill="#8884d8" />
+        <Pie data={data02} dataKey="value" cx="50%" cy="50%" innerRadius={70} outerRadius={90} fill="#82ca9d" label />
+      </PieChartR>
+    </>
   );
-};
+});
 
+// @ts-ignore
 PieChart.Designer = () => {
   return (
     <GeneralSchemaDesigner>
