@@ -33,7 +33,7 @@ import {
   useRoutes,
   WorkflowPage,
   WorkflowRouteProvider,
-  WorkflowShortcut
+  WorkflowShortcut,
 } from '@nocobase/client';
 import { notification } from 'antd';
 import 'antd/dist/antd.css';
@@ -41,6 +41,11 @@ import React from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { Link, NavLink } from 'react-router-dom';
 import apiClient from './apiClient';
+
+// 扩展
+import { BlockInitializers } from './extends/blocks/BlockInitializers';
+import * as items from './extends/blocks/BlockInitializerItems';
+import * as blocks from './extends/blocks';
 
 apiClient.axios.interceptors.response.use(
   (response) => response,
@@ -94,14 +99,16 @@ const providers = [
       },
     },
   ],
-  [SchemaComponentProvider, { components: { Slate, Link, NavLink } }],
+  [SchemaComponentProvider, { components: { Slate, Link, NavLink, ...blocks } }],
   // RemoteCollectionManagerProvider,
   [
     SchemaInitializerProvider,
     {
       initializers: {
         MenuItemInitializers,
+        BlockInitializers,
       },
+      components: { ...items },
     },
   ],
   BlockSchemaComponentProvider,
