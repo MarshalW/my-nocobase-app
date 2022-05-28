@@ -1,0 +1,13 @@
+{
+  "name": "@my-nocobase-app/my-plugin",
+  "version": "independent",
+  "main": "lib/server/index.js",
+  "dependencies": {
+    "bignumber.js": "^9.0.2",
+    "uuid": "^8.3.2"
+  },
+  "peerDependencies": {
+    "@nocobase/server": "*",
+    "@nocobase/test": "*"
+  }
+}
