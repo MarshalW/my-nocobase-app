@@ -1,5 +1,5 @@
 import { FormOutlined, TableOutlined } from '@ant-design/icons';
-import { SchemaInitializer } from '@nocobase/client';
+import { SchemaInitializer,useSchemaSettings } from '@nocobase/client';
 import { useTranslation } from 'react-i18next';
 
 export const SimpleBlockInitializer = (props: any) => {
@@ -48,6 +48,7 @@ export const PieChartBlockInitializer = (props: any) => {
 export const BarChartBlockInitializer = (props: any) => {
   const { insert } = props;
   const { t } = useTranslation();
+  
   return (
     <SchemaInitializer.Item
       {...props}
