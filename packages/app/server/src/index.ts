@@ -1,7 +1,7 @@
 /*
  * @Author: pangff
  * @Date: 2022-05-25 19:37:32
- * @LastEditTime: 2022-05-26 15:13:28
+ * @LastEditTime: 2022-05-31 17:39:32
  * @LastEditors: pangff
  * @Description: 
  * @FilePath: /my-nocobase-app/packages/app/server/src/index.ts
@@ -9,7 +9,6 @@
  */
 import { Application } from '@nocobase/server';
 import config from './config';
-
 const app = new Application(config);
 
 

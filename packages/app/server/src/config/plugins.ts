@@ -1,7 +1,7 @@
 /*
  * @Author: pangff
  * @Date: 2022-05-25 19:37:32
- * @LastEditTime: 2022-05-26 15:10:38
+ * @LastEditTime: 2022-05-31 18:38:50
  * @LastEditors: pangff
  * @Description: 
  * @FilePath: /my-nocobase-app/packages/app/server/src/config/plugins.ts

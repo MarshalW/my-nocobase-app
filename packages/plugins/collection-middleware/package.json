@@ -1,0 +1,10 @@
+{
+  "name": "@my-nocobase-app/collection-middleware",
+  "version": "independent",
+  "main": "lib/server/index.js",
+  "dependencies": {},
+  "peerDependencies": {
+    "@nocobase/server": "*",
+    "@nocobase/test": "*"
+  }
+}

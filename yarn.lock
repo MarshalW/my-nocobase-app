@@ -3094,11 +3094,9 @@
   dependencies:
     "@nocobase/preset-nocobase" "0.7.0-alpha.81"
 
-"@my-nocobase-app/my-plugin@file:/Users/pangff/Work/JsWork/my-nocobase-app/packages/plugins/my-plugin":
-  "resolved" "file:packages/plugins/my-plugin"
+"@my-nocobase-app/collection-middleware@file:/Users/pangff/Work/JsWork/my-nocobase-app/packages/plugins/collection-middleware":
+  "resolved" "file:packages/plugins/collection-middleware"
   "version" "independent"
-  dependencies:
-    "uuid" "^8.3.2"
 
 "@nocobase/acl@0.7.0-alpha.81":
   "integrity" "sha512-IqE4GMJt66VNJCz3wkICUtj2LnSUdczPOBUcQRz2JxQ4X+c1edb+6YjeT0ZVonEfHeBYH9TFY9kK7FyxzWqh6A=="
@@ -5773,11 +5771,6 @@
   "integrity" "sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ=="
   "resolved" "https://registry.npmjs.org/big.js/-/big.js-5.2.2.tgz"
   "version" "5.2.2"
-
-"bignumber.js@^9.0.2":
-  "integrity" "sha512-GAcQvbpsM0pUb0zw1EI0KhQEZ+lRwR5fYaAp3vPOYuP7aDvGy6cVN6XHLauvF8SOga2y0dcLcjt3iQDTSEliyw=="
-  "resolved" "https://registry.npmjs.org/bignumber.js/-/bignumber.js-9.0.2.tgz"
-  "version" "9.0.2"
 
 "binary-extensions@^2.0.0":
   "integrity" "sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA=="
