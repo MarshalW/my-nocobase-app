@@ -1,0 +1,13 @@
+{
+  "name": "@my-nocobase-app/order-plugin",
+  "version": "0.1.0",
+  "main": "lib/server/index.js",
+  "dependencies": {
+    "decimal.js": "^10.3.1",
+    "uuid": "^8.3.2"
+  },
+  "peerDependencies": {
+    "@nocobase/server": "*",
+    "@nocobase/test": "*"
+  }
+}
