@@ -1,7 +1,16 @@
 import { InstallOptions, Plugin } from '@nocobase/server';
 
-import { v4 as uuidv4 } from 'uuid';
-import { Decimal } from 'decimal.js';
+import { collectionHooksConfig as config } from './config';
+
+function queryColumnName(db, collectionName, targetName) {
+  let value;
+  db.getCollection(collectionName).forEachField((field) => {
+    if (field.options.target == targetName) {
+      value = field.options.name;
+    }
+  });
+  return value;
+}
 
 export class OrderPluginPlugin extends Plugin {
   getName(): string {
@@ -9,98 +18,65 @@ export class OrderPluginPlugin extends Plugin {
   }
 
   beforeLoad() {
-    console.log(`>>> before load <order plugin> .. add before start listener`);
-
     this.app.on('beforeStart', async () => {
-      console.log(`>>> before start <order plugin> .. `);
+      config.items.forEach((item) => {
+        const { event, collectionName } = item;
 
-      // 创建前字段更新
-      this.app.db.on(`orders.beforeCreate`, async (model, options) => {
-        console.log(`>>> orders before create @<order plugin> .. `);
+        if (event == 'beforeCreate') {
+          const { callback } = item;
+          this.app.db.on(`${collectionName}.beforeCreate`, async (model) => {
+            callback(model);
+          });
+        }
 
-        // 订单号
-        model.order_number = uuidv4();
+        if (event == 'afterCreateWithAssociations' || event == 'afterUpdate') {
+          this.app.db.on(`${collectionName}.${event}`, async (model, options) => {
+            const { transaction } = options;
+            const { associatedCollections, updateCallback } = item;
+            const id = model.get('id');
+            const appends = [];
 
-        console.log(`<<< orders before create @<order plugin> OK. `);
+            associatedCollections.forEach((item) => {
+              // @ts-ignore
+              let { columnName, collectionName: associatedCollectionName } = item;
+
+              if (associatedCollectionName != null) {
+                appends.push(queryColumnName(this.db, collectionName, associatedCollectionName));
+              } else {
+                appends.push(columnName);
+              }
+            });
+
+            let queryData = await this.app.db.getRepository(collectionName).findOne({
+              filter: {
+                id,
+              },
+              transaction,
+              appends,
+            });
+
+            // 简化 associatedCollectionName 的结果处理，order.orderItems 代替 order.f_xxxx
+            associatedCollections.forEach((item) => {
+              // @ts-ignore
+              let { columnName, collectionName: associatedCollectionName } = item;
+
+              if (associatedCollectionName != null) {
+                queryData[columnName] = queryData[queryColumnName(this.db, collectionName, associatedCollectionName)];
+              }
+            });
+
+            await this.app.db.getRepository(collectionName).update({
+              values: updateCallback(queryData),
+              filter: {
+                id,
+              },
+              hooks: false,
+              transaction,
+            });
+          });
+        }
       });
-
-      // 创建后字段更新
-      const queryColumnName = function (db, collectionName, targetName) {
-        let value;
-        db.getCollection(collectionName).forEachField((field) => {
-          if (field.options.target == targetName) {
-            value = field.options.name;
-          }
-        });
-        return value;
-      };
-
-      //  创建后字段更新 - 更新订单地址和总金额
-      this.app.db.on(`orders.afterCreateWithAssociations`, async (model, options) => {
-        console.log(`>>> orders after create <order plugin> .. `);
-        const collectionName = 'orders';
-        const { transaction } = options;
-
-        const id = model.get('id');
-        const orderItemsColumnName = queryColumnName(this.db, 'orders', 'order_items');
-
-        let queryData = await this.app.db.getRepository(collectionName).findOne({
-          filter: {
-            id,
-          },
-          transaction,
-          appends: ['customer', orderItemsColumnName],
-        });
-
-        // @ts-ignore
-        const address = queryData.customer[0]?.address;
-        const orderItems = queryData[orderItemsColumnName];
-        let total = orderItems.reduce(function (acc, item) {
-          return new Decimal(acc).plus(new Decimal(item.amount)).toFixed(2);
-        }, 0);
-
-        await this.app.db.getRepository(collectionName).update({
-          values: { address, total },
-          filter: {
-            id,
-          },
-          hooks: false,
-          transaction,
-        });
-
-        console.log(`<<< orders after create @<order plugin> OK. `);
-      });
-
-      this.app.db.on(`order_items.afterUpdate`, async (model, options) => {
-        console.log(`>>> order_items after update <order plugin> .. `);
-        
-        const collectionName = 'order_items';
-        const { transaction } = options;
-        const id = model.get('id');
-        const quantity = model.get('quantity');
-        const productColumnName = queryColumnName(this.db, collectionName, 'products');
-
-        let queryData = await this.app.db.getRepository(collectionName).findOne({
-          filter: {
-            id,
-          },
-          transaction,
-          appends: [productColumnName],
-        });
-
-        const { name, price } = queryData[productColumnName];
-        const amount = new Decimal(price).times(new Decimal(quantity)).toFixed(2);
-        await this.app.db.getRepository(collectionName).update({
-          values: { name, price, amount },
-          filter: {
-            id,
-          },
-          hooks: false,
-          transaction,
-        });
-
-        console.log(`<<< order_items after update @<order plugin> OK. `);
-      });
+      console.log(`>>> before start <order plugin> .. OK `);
     });
   }
 
