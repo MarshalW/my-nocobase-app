@@ -40,7 +40,6 @@ export class OrderPluginPlugin extends Plugin {
         console.log(`>>> orders after create <order plugin> .. `);
         const collectionName = 'orders';
         const { transaction } = options;
-        // console.log({ model, options });
 
         const id = model.get('id');
         const orderItemsColumnName = queryColumnName(this.db, 'orders', 'order_items');
@@ -69,13 +68,12 @@ export class OrderPluginPlugin extends Plugin {
           transaction,
         });
 
-        // console.log(queryData);
         console.log(`<<< orders after create @<order plugin> OK. `);
       });
 
       this.app.db.on(`order_items.afterUpdate`, async (model, options) => {
         console.log(`>>> order_items after update <order plugin> .. `);
-        console.log({ model, options });
+        
         const collectionName = 'order_items';
         const { transaction } = options;
         const id = model.get('id');
