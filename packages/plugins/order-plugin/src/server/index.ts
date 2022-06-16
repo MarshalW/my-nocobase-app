@@ -1,6 +1,7 @@
 import { InstallOptions, Plugin } from '@nocobase/server';
 
 import { collectionHooksConfig as config } from './config';
+import collectionHooks from './collectionHooks';
 
 function queryColumnName(db, collectionName, targetName) {
   let value;
@@ -19,63 +20,7 @@ export class OrderPluginPlugin extends Plugin {
 
   beforeLoad() {
     this.app.on('beforeStart', async () => {
-      config.items.forEach((item) => {
-        const { event, collectionName } = item;
-
-        if (event == 'beforeCreate') {
-          const { callback } = item;
-          this.app.db.on(`${collectionName}.beforeCreate`, async (model) => {
-            callback(model);
-          });
-        }
-
-        if (event == 'afterCreateWithAssociations' || event == 'afterUpdate') {
-          this.app.db.on(`${collectionName}.${event}`, async (model, options) => {
-            const { transaction } = options;
-            const { associatedCollections, updateCallback } = item;
-            const id = model.get('id');
-            const appends = [];
-
-            associatedCollections.forEach((item) => {
-              // @ts-ignore
-              let { columnName, collectionName: associatedCollectionName } = item;
-
-              if (associatedCollectionName != null) {
-                appends.push(queryColumnName(this.db, collectionName, associatedCollectionName));
-              } else {
-                appends.push(columnName);
-              }
-            });
-
-            let queryData = await this.app.db.getRepository(collectionName).findOne({
-              filter: {
-                id,
-              },
-              transaction,
-              appends,
-            });
-
-            // 简化 associatedCollectionName 的结果处理，order.orderItems 代替 order.f_xxxx
-            associatedCollections.forEach((item) => {
-              // @ts-ignore
-              let { columnName, collectionName: associatedCollectionName } = item;
-
-              if (associatedCollectionName != null) {
-                queryData[columnName] = queryData[queryColumnName(this.db, collectionName, associatedCollectionName)];
-              }
-            });
-
-            await this.app.db.getRepository(collectionName).update({
-              values: updateCallback(queryData),
-              filter: {
-                id,
-              },
-              hooks: false,
-              transaction,
-            });
-          });
-        }
-      });
+      collectionHooks(config, this.app.db);
       console.log(`>>> before start <order plugin> .. OK `);
     });
   }
