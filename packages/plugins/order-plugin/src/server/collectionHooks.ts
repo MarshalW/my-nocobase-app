@@ -26,17 +26,24 @@ export default function (config, db) {
         const id = model.get('id');
         const appends = [];
 
+        // 得到正确的 appends
         associatedCollections.forEach((item) => {
           // @ts-ignore
           let { columnName, collectionName: associatedCollectionName } = item;
 
           if (associatedCollectionName != null) {
-            appends.push(queryColumnName(db, collectionName, associatedCollectionName));
-          } else {
+            // 使用关联 collection name 查找 column name
+            let _columnName = queryColumnName(db, collectionName, associatedCollectionName);
+            if (_columnName != null) {
+              appends.push(_columnName);
+            }
+          } else if (db.getCollection(collectionName).hasField(columnName)) {
+            // 直接使用 column name 的情况
             appends.push(columnName);
           }
         });
 
+        // 查询带指定关联对象的结果
         let queryData = await db.getRepository(collectionName).findOne({
           filter: {
             id,
@@ -45,13 +52,23 @@ export default function (config, db) {
           appends,
         });
 
+        // 增加默认数据，当相关数据还不存在的情况下
+        associatedCollections.forEach((item) => {
+          // @ts-ignore
+          let { columnName, default: defautValue = {} } = item;
+          queryData[columnName] = queryData[columnName] || defautValue;
+        });
+
         // 简化 associatedCollectionName 的结果处理，order.orderItems 代替 order.f_xxxx
         associatedCollections.forEach((item) => {
           // @ts-ignore
           let { columnName, collectionName: associatedCollectionName } = item;
 
           if (associatedCollectionName != null) {
-            queryData[columnName] = queryData[queryColumnName(db, collectionName, associatedCollectionName)];
+            let _columnName = queryColumnName(db, collectionName, associatedCollectionName);
+            if (_columnName != null) {
+              queryData[columnName] = queryData[_columnName];
+            }
           }
         });
 

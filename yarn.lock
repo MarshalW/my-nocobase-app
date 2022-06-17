@@ -2694,7 +2694,7 @@
     vinyl-fs "3.0.3"
     yargs-parser "13.1.2"
 
-"@nocobase/cli@0.7.0-alpha.83":
+"@nocobase/cli@^0.7.0-alpha.83":
   version "0.7.0-alpha.83"
   resolved "https://registry.yarnpkg.com/@nocobase/cli/-/cli-0.7.0-alpha.83.tgz#c2ef5475e791e5964d35527035ab53e26e4bf6da"
   integrity sha512-wOMXtYaGWM3wpz5agNg2boMkV85W+LIuXYO/GtUHTBsy0h9tZwL99s8qeD8r2PSO07wFm7QSfxo4IyVw1CFepw==
@@ -2753,7 +2753,7 @@
     sequelize "^6.9.0"
     umzug "^3.1.1"
 
-"@nocobase/devtools@0.7.0-alpha.83":
+"@nocobase/devtools@^0.7.0-alpha.83":
   version "0.7.0-alpha.83"
   resolved "https://registry.yarnpkg.com/@nocobase/devtools/-/devtools-0.7.0-alpha.83.tgz#5c4dea70e3f5378848e7dad8a4aec8e864de0dfe"
   integrity sha512-F24Db4rhh5T6zAhQ5PbCvD+J5iVF/oZv8YA30xC3knXRk3ylcSy00t9jvMlvzO4hNGh90YaTpCPaKmmNnA1VAw==
@@ -3833,19 +3833,12 @@
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.4.tgz#cd667bcfdd025213aafb7ca5915a932590acdcdc"
   integrity sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==
 
-"@types/react-dom@<18.0.0", "@types/react-dom@^17.0.0":
+"@types/react-dom@<18.0.0", "@types/react-dom@^16.9.8", "@types/react-dom@^17.0.0":
   version "17.0.17"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-17.0.17.tgz#2e3743277a793a96a99f1bf87614598289da68a1"
   integrity sha512-VjnqEmqGnasQKV0CWLevqMTXBYG9GbwuE6x3VetERLh0cq2LTptFE73MrQi2S7GkKXCf2GgwItB/melLnxfnsg==
   dependencies:
     "@types/react" "^17"
-
-"@types/react-dom@^16.9.8":
-  version "16.9.16"
-  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.9.16.tgz#c591f2ed1c6f32e9759dfa6eb4abfd8041f29e39"
-  integrity sha512-Oqc0RY4fggGA3ltEgyPLc3IV9T73IGoWjkONbsyJ3ZBn+UPPCYpU2ec0i3cEbJuEdZtkqcCF2l1zf2pBdgUGSg==
-  dependencies:
-    "@types/react" "^16"
 
 "@types/react-redux@^7.1.20":
   version "7.1.24"
@@ -3900,19 +3893,10 @@
     "@types/history" "*"
     "@types/react" "*"
 
-"@types/react@*", "@types/react@>=16.9.11", "@types/react@^17", "@types/react@^17.0.0":
+"@types/react@*", "@types/react@>=16.9.11", "@types/react@^16.9.43", "@types/react@^17", "@types/react@^17.0.0":
   version "17.0.45"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.45.tgz#9b3d5b661fd26365fefef0e766a1c6c30ccf7b3f"
   integrity sha512-YfhQ22Lah2e3CHPsb93tRwIGNiSwkuz1/blk4e6QrWS0jQzCSNbGLtOEYhPg02W0yGTTmpajp7dCTbBAMN3qsg==
-  dependencies:
-    "@types/prop-types" "*"
-    "@types/scheduler" "*"
-    csstype "^3.0.2"
-
-"@types/react@^16", "@types/react@^16.9.43":
-  version "16.14.26"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.14.26.tgz#82540a240ba7207ebe87d9579051bc19c9ef7605"
-  integrity sha512-c/5CYyciOO4XdFcNhZW1O2woVx86k4T+DO2RorHZL7EhitkNQgSD/SgpdZJAUJa/qjVgOmTM44gHkAdZSXeQuQ==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
