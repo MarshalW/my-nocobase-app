@@ -1,0 +1,14 @@
+{
+  "name": "@my-nocobase-app/app-client",
+  "version": "0.1.0",
+  "license": "MIT",
+  "devDependencies": {
+    "@nocobase/client": "0.7.0-alpha.83"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nocobase/nocobase.git",
+    "directory": "packages/app/client"
+  },
+  "gitHead": "838f4f18dcd9ed4fe2ae2660a4918e2a5bd3a869"
+}
