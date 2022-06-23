@@ -12,4 +12,5 @@ export default [
   '@nocobase/plugin-china-region',
   '@nocobase/plugin-workflow',
   '@nocobase/plugin-client',
+  '@my-nocobase-app/nft',
 ] as PluginsConfigurations;
