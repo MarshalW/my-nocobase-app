@@ -2,7 +2,9 @@
   "name": "@my-nocobase-app/nft",
   "version": "0.1.0",
   "main": "lib/server/index.js",
-  "dependencies": {},
+  "dependencies": {
+    "@nocobase/server": "*"
+  },
   "peerDependencies": {
     "@nocobase/server": "*",
     "@nocobase/test": "*"
