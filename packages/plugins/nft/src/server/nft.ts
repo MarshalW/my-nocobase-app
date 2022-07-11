@@ -1,15 +1,16 @@
 import Database from '@nocobase/database';
-// import { initEnumMaps } from './utils';
-// import initNftSeriesResetHooks from './hooks/nftSeriesReset';
-// import initOnChainingHook from './hooks/ntfChangedHooks';
-import initNtfSeriesHooks from './hooks/ntfSeriesHooks';
+import initNftSeriesHooks from './hooks/ntfSeriesHooks';
+import initNftHooks from './hooks/nftHooks';
+import initOrderHooks from './hooks/orderHooks';
+import initUserHooks from './hooks/userHooks';
 
 async function addNftHooks(db: Database) {
-  initNtfSeriesHooks(db);
+  initNftSeriesHooks(db);
+  await initNftHooks(db);
+  await initOrderHooks(db);
+  await initUserHooks(db);
+
   console.log(`>>>Add nft hooks .. OK.`);
-  // await initEnumMaps(db);
-  // initNftSeriesResetHooks(db);
-  // initOnChainingHook(db);
 }
 
 export default addNftHooks;

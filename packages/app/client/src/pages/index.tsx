@@ -1,4 +1,5 @@
-import { Application } from '@nocobase/client';
+// import { Application } from '@nocobase/client';
+import { Application } from './extends/Application';
 
 export const app = new Application({
   apiClient: {

@@ -46,7 +46,6 @@ export default function initEvents(db: Database) {
 
   db.on(`updateNftSeriesValues`, async ({ seriesIds, transaction }) => {
     await updateNftSeries({ db, seriesIds, transaction });
-    console.log(`>>>>>update nft series values`);
   });
 
   db.on('nfts.afterUpdate', async (model, options) => {

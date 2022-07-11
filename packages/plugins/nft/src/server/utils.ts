@@ -38,7 +38,19 @@ export function queryColumnName(db, collectionName, targetName) {
 export function queryForeignKey(db, collectionName, targetName) {
   let value;
   db.getCollection(collectionName).forEachField((field) => {
+    // console.log({ field });
     if (field.options.target == targetName) {
+      value = field.options.foreignKey;
+    }
+  });
+  return value;
+}
+
+export function queryForeignKeyByName(db, collectionName, name) {
+  let value;
+  db.getCollection(collectionName).forEachField((field) => {
+    // console.log({ field });
+    if (field.options.name == name) {
       value = field.options.foreignKey;
     }
   });
