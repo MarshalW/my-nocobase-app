@@ -1,0 +1,15 @@
+{
+  "name": "@my-nocobase-app/nft",
+  "version": "0.1.0",
+  "main": "lib/server/index.js",
+  "dependencies": {
+    "@nocobase/server": "*",
+    "node-schedule": "^2.1.0",
+    "randomstring": "^1.2.2",
+    "uuid": "^8.3.2"
+  },
+  "peerDependencies": {
+    "@nocobase/server": "*",
+    "@nocobase/test": "*"
+  }
+}
