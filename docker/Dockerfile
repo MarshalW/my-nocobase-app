@@ -30,7 +30,7 @@ RUN yarn add mysql2 -W
 
 FROM nginx:alpine as nft-client
 
-COPY --from=0 /usr/src/app/my-app/packages/app/client /usr/share/nginx/html
+COPY --from=0 /usr/src/app/my-app/packages/app/client/dist /usr/share/nginx/html
 COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /usr/share/nginx/html

@@ -5,10 +5,16 @@ import initOrderHooks from './hooks/orderHooks';
 import initUserHooks from './hooks/userHooks';
 
 async function addNftHooks(db: Database) {
-  initNftSeriesHooks(db);
-  await initNftHooks(db);
-  await initOrderHooks(db);
-  await initUserHooks(db);
+  if (db.getCollection('nfts') != null && db.getCollection('nft_series') != null) {
+    initNftSeriesHooks(db);
+    await initNftHooks(db);
+
+    if (db.getCollection('orders') != null) {
+      await initOrderHooks(db);
+    }
+
+    // await initUserHooks(db);
+  }
 
   console.log(`>>>Add nft hooks .. OK.`);
 }
