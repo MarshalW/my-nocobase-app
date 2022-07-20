@@ -1,0 +1,45 @@
+version: "3"
+networks:
+  nft:
+    driver: bridge
+services:
+  client:
+    image: nft-client
+    container_name: client
+    networks:
+      - nft
+    env_file:
+      - .env
+    ports:
+      - "13000:80"
+    depends_on:
+      - server
+  server:
+    image: nft-server
+    container_name: server
+    init: true
+    networks:
+      - nft
+    depends_on:
+      - mysql
+    volumes:
+      - nft-upload-data:/app/nocobase/storage/uploads
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - .env
+  mysql:
+    image: ${MYSQL_VERSION}
+    container_name: mysql
+    restart: unless-stopped
+    cap_add:
+      - SYS_NICE
+    volumes:
+      - nft-mysql-data:/var/lib/mysql
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - nft
+    env_file:
+      - .env
+volumes:
+  nft-mysql-data:
+  nft-upload-data:
