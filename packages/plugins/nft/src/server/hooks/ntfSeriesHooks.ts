@@ -3,6 +3,7 @@ import { queryForeignKey, queryColumnName } from '../utils';
 
 // 根据[ntf_series id]重新计算ntf_series的藏品数(nft_count)和发售总数(total)
 async function updateNftSeries({ db, seriesIds, transaction }) {
+  console.log({ seriesIds });
   let nftColumnName = queryColumnName(db, 'nft_series', 'nfts');
 
   for (let id of seriesIds) {
@@ -42,19 +43,24 @@ async function updateNftSeries({ db, seriesIds, transaction }) {
 }
 
 export default function initEvents(db: Database) {
-  const nftSeriesForeignKey = queryForeignKey(db, 'nfts', 'nft_series');
-
   db.on(`updateNftSeriesValues`, async ({ seriesIds, transaction }) => {
     await updateNftSeries({ db, seriesIds, transaction });
   });
+
+  const nftSeriesForeignKey = queryForeignKey(db, 'nfts', 'nft_series');
 
   db.on('nfts.afterUpdate', async (model, options) => {
     // 排除是更新表数据而非关联关系的情况
     if (options.values != null) return;
 
+    // 排除更新的不是nft_series
+    if (!model._changed.has('f_nft_series')) return;
+
     const { transaction } = options;
     const currentNftSeriesId = model[nftSeriesForeignKey];
     const previewsNftSeriesId = model._previousDataValues[nftSeriesForeignKey];
+
+    console.log({ nftSeriesForeignKey, model, options });
 
     // nft series id 未改变
     // if (currentNftSeriesId == previewsNftSeriesId) return;

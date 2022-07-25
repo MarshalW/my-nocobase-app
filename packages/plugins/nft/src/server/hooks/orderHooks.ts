@@ -23,6 +23,7 @@ async function updateNft(db, transaction, order) {
 }
 
 export default async function initEvents(db: Database) {
+  console.log(`init order hooks .. `)
   db.on('orders.beforeCreate', async (model, options) => {
     model.order_number = randomstring.generate({
       length: 15,

@@ -17,3 +17,6 @@ docs-dist/
 .npmrc
 dist/
 docker/**/storage
+
+hooks_bak
+storage/uploads/

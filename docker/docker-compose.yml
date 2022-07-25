@@ -14,6 +14,8 @@ services:
       - "12000:80"
     depends_on:
       - server
+    volumes:
+      - nft-upload-data:/usr/src/app/my-app/storage/uploads
   server:
     image: nft-server
     container_name: server
@@ -23,7 +25,7 @@ services:
     depends_on:
       - mysql
     volumes:
-      - nft-upload-data:/app/nocobase/storage/uploads
+      - nft-upload-data:/usr/src/app/my-app/storage/uploads
       - /etc/localtime:/etc/localtime:ro
     env_file:
       - .env
@@ -36,10 +38,13 @@ services:
     volumes:
       - nft-mysql-data:/var/lib/mysql
       - /etc/localtime:/etc/localtime:ro
+      - ./backup/mysql.sql:/docker-entrypoint-initdb.d/1.sql
     networks:
       - nft
     env_file:
       - .env
+    ports:
+      - 3306:3306
 volumes:
   nft-mysql-data:
   nft-upload-data:
