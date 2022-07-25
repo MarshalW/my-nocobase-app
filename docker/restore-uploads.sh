@@ -1,7 +1,7 @@
 #!/bin/bash
 
 volume_name=docker_nft-upload-data
-uploads_path=/usr/src/app/my-app/storage/uploads
+uploads_path=/usr/src/app/storage/uploads
 backup_file=$1
 uploads_backup_path=backup/uploads
 

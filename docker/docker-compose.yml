@@ -15,7 +15,7 @@ services:
     depends_on:
       - server
     volumes:
-      - nft-upload-data:/usr/src/app/my-app/storage/uploads
+      - nft-upload-data:/usr/src/app/storage/uploads
   server:
     image: nft-server
     container_name: server
@@ -25,7 +25,7 @@ services:
     depends_on:
       - mysql
     volumes:
-      - nft-upload-data:/usr/src/app/my-app/storage/uploads
+      - nft-upload-data:/usr/src/app/storage/uploads
       - /etc/localtime:/etc/localtime:ro
     env_file:
       - .env

@@ -6,11 +6,8 @@ RUN apt-get update \
 WORKDIR /usr/src/app
 
 RUN cd /usr/src/app \
-    && git clone https://github.com/MarshalW/my-nocobase-app.git my-app && echo 'OK'
-RUN cd my-app \
-    && git checkout nft4
-
-WORKDIR /usr/src/app/my-app
+    && git clone https://github.com/MarshalW/my-nocobase-app.git . && echo 'OK'
+RUN git checkout nft4
 
 RUN rm -f yarn.lock
 RUN yarn install
@@ -22,7 +19,7 @@ RUN yarn add mysql2 -W
 
 FROM nginx:alpine as nft-client
 
-COPY --from=0 /usr/src/app/my-app/packages/app/client/dist /usr/share/nginx/html
+COPY --from=0 /usr/src/app/packages/app/client/dist /usr/share/nginx/html
 COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /usr/share/nginx/html
@@ -30,9 +27,9 @@ CMD nginx -g 'daemon off;'
 
 FROM node:18-alpine as nft-server
 
-WORKDIR /usr/src/app/my-app
+WORKDIR /usr/src/app
 
-COPY --from=0 /usr/src/app/my-app .
-COPY ./start.sh /usr/src/app/my-app
+COPY --from=0 /usr/src/app .
+COPY ./start.sh /usr/src/app
 
-CMD ["/usr/src/app/my-app/start.sh"]
+CMD ["/usr/src/app/start.sh"]

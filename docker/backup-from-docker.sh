@@ -10,7 +10,7 @@ password=$($grep_command -Po '(^|[ ,])MYSQL_ROOT_PASSWORD=\K[^,]*' .env)
 database=$($grep_command -Po '(^|[ ,])DB_DATABASE=\K[^,]*' .env)
 mysql_container_name=mysql1
 server_container_name=server
-uploads_path=/usr/src/app/my-app/storage/uploads
+uploads_path=/usr/src/app/storage/uploads
 
 tmp_backup_path=/tmp/backup
 
