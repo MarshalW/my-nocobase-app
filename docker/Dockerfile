@@ -6,7 +6,7 @@ RUN apt-get update \
 WORKDIR /usr/src/app
 
 RUN cd /usr/src/app \
-    && git clone https://github.com/MarshalW/my-nocobase-app.git . && echo 'OK'
+    && git clone https://github.com/MarshalW/my-nocobase-app.git . && echo 'OK123'
 RUN git checkout nft4
 
 RUN rm -f yarn.lock
